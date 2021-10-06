@@ -1,0 +1,5 @@
+export const pageActionTypes = {
+  INCREASE_PAGE_NO: "INCREASE_PAGE_NO",
+  DECREASE_PAGE_NO: "DECREASE_PAGE_NO",
+  PAGE_RESET: "PAGE_RESET",
+};

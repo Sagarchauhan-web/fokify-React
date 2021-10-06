@@ -2,6 +2,7 @@ import React from "react";
 import Bookmark from "./Bookmarks/bookmark-component";
 import "./header-styles.scss";
 import { storeRecipes } from "../../redux/recipe/recipeAction";
+import { pageReset } from "../../redux/pagination/pageActions";
 // import { selectRecipes } from "../../redux/recipe/recipeSelector";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -10,13 +11,14 @@ class Header extends React.Component {
   componenetDidMount() {}
 
   fetch = async (item) => {
-    const { storingSearchList } = this.props;
+    const { storingSearchList, pageReset } = this.props;
     try {
       const response = await axios.get(
         `https://forkify-api.herokuapp.com/api/v2/recipes?search=${item}`
       );
       // console.log(response);
       storingSearchList(response.data.data.recipes);
+      pageReset();
     } catch (err) {
       console.log(err);
     }
@@ -75,6 +77,7 @@ class Header extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   storingSearchList: (data) => dispatch(storeRecipes(data)),
+  pageReset: () => dispatch(pageReset()),
 });
 
 // const mapStateToProps = (state) => ({

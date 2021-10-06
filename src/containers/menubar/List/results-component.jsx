@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { selectRecipes } from "../../../redux/recipe/recipeSelector";
+import { selectRecipesByPage } from "../../../redux/recipe/recipeSelector";
 import { Link } from "react-router-dom";
 
-const Results = ({ recipes }) => {
+const Results = ({ recipes, page }) => {
+  console.log(recipes, page);
   return (
     <ul className="results">
       {recipes.length > 0
@@ -33,8 +34,8 @@ const Results = ({ recipes }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  recipes: selectRecipes(state),
+const mapStateToProps = (state, ownProps) => ({
+  recipes: selectRecipesByPage(ownProps.page)(state),
 });
 
 export default connect(mapStateToProps)(Results);
