@@ -25,6 +25,7 @@ $bp-smallest: 31.25em; // 500px
 .results {
   list-style: none;
   margin-bottom: 2rem;
+  height: 100%;
 }
 
 .pagination {
@@ -166,6 +167,7 @@ $bp-smallest: 31.25em; // 500px
 }
 .recipe {
   background-color: $color-grey-light-1;
+  height: 100%;
 
   ///////////
   // FIGURE

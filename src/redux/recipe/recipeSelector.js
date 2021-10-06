@@ -11,7 +11,6 @@ export const selectRecipesByPage = (page) =>
   createSelector([selectRecipes], (recipesData) => {
     const start = (page - 1) * 10;
     const end = page * 10;
-    console.log(page);
     return recipesData.slice(start, end);
   });
 

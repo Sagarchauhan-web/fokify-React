@@ -4,7 +4,7 @@ import { selectRecipesByPage } from "../../../redux/recipe/recipeSelector";
 import { Link } from "react-router-dom";
 
 const Results = ({ recipes, page }) => {
-  console.log(recipes, page);
+  // console.log(recipes, page);
   return (
     <ul className="results">
       {recipes.length > 0

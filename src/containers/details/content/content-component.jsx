@@ -6,25 +6,50 @@ import { selectRecipe } from "../../../redux/recipe/recipeSelector";
 import RecipeIngrediant from "./recipeIngrediant";
 
 class Content extends React.Component {
+  state = {
+    id: undefined,
+  };
+
   async componentDidMount() {
     try {
-      const { id } = this.props.match.params;
-      console.log(id);
-      const response = await axios.get(
-        `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
-      );
-      this.props.storeRecipe(response.data.data.recipe);
+      this.setState({ id: this.props.match.params.id }, this.getData);
     } catch (err) {
       console.log(err);
     }
   }
+
+  async getData() {
+    const response = await axios.get(
+      `https://forkify-api.herokuapp.com/api/v2/recipes/${this.state.id}`
+    );
+    this.props.storeRecipe(response.data.data.recipe);
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.match.params.id !== prevState.id) {
+      return { id: nextProps.match.params.id };
+    } else {
+      return null;
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.id !== prevProps.match.params.id) {
+      this.getData();
+    }
+  }
+
   render() {
     const { recipe } = this.props;
-    console.log(recipe);
+    // console.log(recipe);
     return (
       <>
         <figure className="recipe__fig">
-          <img src={recipe.image_url} alt="Tomato" className="recipe__img" />
+          <img
+            src={recipe.image_url}
+            alt="{recipe.title}"
+            className="recipe__img"
+          />
           <h1 className="recipe__title">
             <span>{recipe.title}</span>
           </h1>
@@ -86,7 +111,7 @@ class Content extends React.Component {
           <h2 className="heading--2">How to cook it</h2>
           <p className="recipe__directions-text">
             This recipe was carefully designed and tested by
-            <span className="recipe__publisher">{recipe.publisher}</span>.
+            <span className="recipe__publisher"> {recipe.publisher}</span>.
             Please check out directions at their website.
           </p>
           <a
